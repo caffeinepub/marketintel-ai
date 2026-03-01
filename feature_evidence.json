@@ -1,0 +1,166 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-implement-internet-identity-authentication-gate-the-entire-dashboard-behind-login-show-a-centered-login-screen-with-the-app-logo-and-an-login-with-internet-identity-button-when-the-user-is-unauthenticated-provide-a-logout-button-in-the-top-bar-that-clears-the-session",
+      "featureTitle": "Implement Internet Identity authentication. Gate the entire dashboard behind login. Show a centered login screen with the app logo and an 'Login with Internet Identity' button when the user is unauthenticated. Provide a 'Logout' button in the top bar that clears the session.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/LoginScreen.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-persistent-top-navigation-bar-showing-the-app-name-marketintel-ai-on-the-left-and-a-logout-button-on-the-right-the-bar-must-be-visible-on-all-authenticated-views",
+      "featureTitle": "Build a persistent top navigation bar showing the app name 'MarketIntel AI' on the left and a 'Logout' button on the right. The bar must be visible on all authenticated views.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/TopBar.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-an-asset-selection-area-below-the-top-bar-include-a-dropdown-menu-listing-btc-eth-and-sol-add-three-timeframe-toggle-buttons-1h-4h-1d-only-one-timeframe-can-be-active-at-a-time-highlighted-state-the-selected-asset-and-timeframe-are-used-by-the-chart-and-analysis-features",
+      "featureTitle": "Add an asset selection area below the top bar. Include a dropdown menu listing BTC, ETH, and SOL. Add three timeframe toggle buttons: 1H, 4H, 1D. Only one timeframe can be active at a time (highlighted state). The selected asset and timeframe are used by the chart and analysis features.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/AssetSelector.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-embed-a-tradingview-chart-widget-in-the-main-view-area-the-widget-must-reflect-the-currently-selected-asset-btc-eth-sol-and-timeframe-1h-4h-1d-use-the-tradingview-advanced-chart-widget-via-an-iframe-or-script-embed-https-www-tradingview-com-widget-if-csp-restrictions-prevent-embedding-show-a-graceful-fallback-message-indicating-the-chart-could-not-be-loaded-with-a-link-to-tradingview",
+      "featureTitle": "Embed a TradingView chart widget in the main view area. The widget must reflect the currently selected asset (BTC, ETH, SOL) and timeframe (1H, 4H, 1D). Use the TradingView Advanced Chart widget via an iframe or script embed (https://www.tradingview.com/widget/). If CSP restrictions prevent embedding, show a graceful fallback message indicating the chart could not be loaded with a link to TradingView.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/TradingViewChart.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-an-analyze-button-below-the-chart-when-clicked-generate-a-simulated-ai-analysis-card-for-the-currently-selected-asset-and-timeframe-the-card-must-display-trend-bullish-or-bearish-rsi-status-overbought-oversold-neutral-support-resistance-two-or-three-key-price-levels-risk-badge-color-coded-green-low-yellow-medium-red-high-and-a-summary-text-paragraph-explaining-the-market-condition-values-should-be-algorithmically-derived-based-on-the-selected-asset-and-timeframe-deterministic-seeded-simulation-is-acceptable-since-no-real-ai-api-is-available",
+      "featureTitle": "Add an 'Analyze' button below the chart. When clicked, generate a simulated AI Analysis Card for the currently selected asset and timeframe. The card must display: Trend (Bullish or Bearish), RSI Status (Overbought / Oversold / Neutral), Support/Resistance (two or three key price levels), Risk Badge (color-coded: Green = Low, Yellow = Medium, Red = High), and a Summary text paragraph explaining the market condition. Values should be algorithmically derived based on the selected asset and timeframe (deterministic seeded simulation is acceptable since no real AI API is available).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/AnalysisCard.tsx",
+        "frontend/src/utils/analysisGenerator.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-history-tab-alongside-or-below-the-main-dashboard-view-this-tab-lists-all-previous-analyses-for-the-authenticated-user-retrieved-from-the-backend-ordered-newest-first-each-list-item-shows-the-asset-timeframe-risk-badge-color-and-timestamp-clicking-a-list-item-expands-or-navigates-to-a-detail-view-showing-the-full-analysis-card-for-that-record",
+      "featureTitle": "Add a 'History' tab (alongside or below the main dashboard view). This tab lists all previous analyses for the authenticated user, retrieved from the backend, ordered newest first. Each list item shows the asset, timeframe, risk badge color, and timestamp. Clicking a list item expands or navigates to a detail view showing the full Analysis Card for that record.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/HistoryTab.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-display-a-persistent-footer-at-the-bottom-of-every-authenticated-page-with-the-exact-text-this-is-not-financial-advice-no-profits-are-guaranteed",
+      "featureTitle": "Display a persistent footer at the bottom of every authenticated page with the exact text: 'This is not financial advice. No profits are guaranteed.'",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Footer.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-consistent-dark-fintech-visual-theme-across-the-entire-application-deep-charcoal-1a1a2e-or-similar-background-electric-blue-0066ff-or-similar-for-primary-buttons-and-active-states-light-grey-or-white-for-primary-text-subtle-card-surfaces-using-slightly-lighter-charcoal-use-a-clean-monospaced-or-sans-serif-typeface-ensure-the-analysis-card-risk-badges-use-green-22c55e-yellow-eab308-and-red-ef4444-apply-consistent-spacing-border-radius-and-subtle-glow-shadow-effects-on-interactive-elements",
+      "featureTitle": "Apply a consistent dark fintech visual theme across the entire application: deep charcoal (#1a1a2e or similar) background, electric blue (#0066ff or similar) for primary buttons and active states, light grey or white for primary text, subtle card surfaces using slightly lighter charcoal. Use a clean monospaced or sans-serif typeface. Ensure the Analysis Card risk badges use green (#22c55e), yellow (#eab308), and red (#ef4444). Apply consistent spacing, border-radius, and subtle glow/shadow effects on interactive elements.",
+      "files": [
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

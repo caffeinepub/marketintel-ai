@@ -1,0 +1,203 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "MarketIntel AI — Crypto Market Analysis Dashboard Frontend",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Implement Internet Identity authentication gating the entire dashboard",
+      "acceptanceCriteria": [
+        "Unauthenticated users see only the login screen",
+        "Clicking 'Login with Internet Identity' triggers the II authentication flow",
+        "After successful login, the dashboard is displayed",
+        "Clicking 'Logout' clears the session and returns the user to the login screen"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/LoginScreen.tsx",
+          "operation": "create",
+          "description": "Create a centered login screen component displaying the app logo from frontend/public/assets/generated/marketintel-logo.dim_128x128.png and a 'Login with Internet Identity' button. Use the authorization component's useInternetIdentity hook to trigger login. Apply dark fintech theme styling with electric blue button."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wrap the entire dashboard in authentication logic. Show LoginScreen when unauthenticated, show main dashboard when authenticated. Use the authorization component's useInternetIdentity hook to check authentication state. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Build a persistent top navigation bar with app name and logout button",
+      "acceptanceCriteria": [
+        "Top bar is always visible when authenticated",
+        "App name 'MarketIntel AI' is displayed on the left",
+        "Logout button is on the right and triggers logout"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/TopBar.tsx",
+          "operation": "create",
+          "description": "Create a top navigation bar component with 'MarketIntel AI' text on the left and a 'Logout' button on the right. The logout button must use the authorization component's useInternetIdentity hook to call clear() and invalidate all cached data using queryClient.clear(). Apply dark fintech theme with charcoal background and electric blue for the logout button. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Include TopBar component at the top of the authenticated dashboard layout. Ensure it persists across all views and tabs."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Add asset selection dropdown and timeframe toggle buttons",
+      "acceptanceCriteria": [
+        "Dropdown lists BTC, ETH, SOL and defaults to BTC",
+        "1H, 4H, 1D buttons are displayed; active button is visually highlighted",
+        "Selecting a different asset or timeframe updates the chart view"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/AssetSelector.tsx",
+          "operation": "create",
+          "description": "Create an asset selection component with a dropdown for BTC, ETH, SOL (defaulting to BTC) and three toggle buttons for 1H, 4H, 1D timeframes. Use React state to track selected asset and timeframe. Apply dark theme styling with electric blue highlighting for the active timeframe button. Export the selected values via callback props to parent component."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add AssetSelector component below the TopBar in the authenticated dashboard. Manage selected asset and timeframe state at App level and pass down to child components (chart, analysis)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Embed TradingView chart widget reflecting selected asset and timeframe",
+      "acceptanceCriteria": [
+        "Chart area updates when the user changes the asset or timeframe",
+        "TradingView widget is embedded via iframe/script in the center of the dashboard",
+        "If the embed fails, a graceful fallback message with a TradingView link is shown"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/TradingViewChart.tsx",
+          "operation": "create",
+          "description": "Create a TradingView chart component that embeds the TradingView Advanced Chart widget using an iframe or script embed (https://www.tradingview.com/widget/). Accept asset and timeframe as props. Map asset symbols (BTC→BTCUSD, ETH→ETHUSD, SOL→SOLUSD) and timeframe values (1H→60, 4H→240, 1D→D) to TradingView format. Include error boundary or fallback UI displaying a message with a link to TradingView if embedding fails. Apply dark theme consistent with the dashboard."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add TradingViewChart component in the main content area below AssetSelector. Pass the selected asset and timeframe as props."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Add 'Analyze' button generating a simulated AI Analysis Card",
+      "acceptanceCriteria": [
+        "Clicking 'Analyze' shows an Analysis Card with all five data points",
+        "Trend shows 'Bullish' or 'Bearish'",
+        "RSI Status shows 'Overbought', 'Oversold', or 'Neutral'",
+        "Support/Resistance lists at least two price levels",
+        "Risk Badge is color-coded green/yellow/red",
+        "Summary contains a short descriptive paragraph",
+        "Analysis Card values vary meaningfully by asset and timeframe selection"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/utils/analysisGenerator.ts",
+          "operation": "create",
+          "description": "Create a deterministic simulation function that generates analysis data based on asset symbol and timeframe. Use a seeded algorithm (e.g., hash of asset+timeframe+date) to produce: trend (Bullish/Bearish), RSI status (Overbought/Oversold/Neutral), 2-3 support levels, 2-3 resistance levels, risk level (Low/Medium/High), and a descriptive summary paragraph. Return a typed AnalysisRecord matching the backend interface type."
+        },
+        {
+          "path": "frontend/src/components/AnalysisCard.tsx",
+          "operation": "create",
+          "description": "Create an Analysis Card component displaying: Trend, RSI Status, Support/Resistance levels, Risk Badge (with green=#22c55e for Low, yellow=#eab308 for Medium, red=#ef4444 for High), and Summary text. Accept an AnalysisRecord as props. Apply dark fintech card styling with slightly lighter charcoal background, border-radius, and subtle shadows."
+        },
+        {
+          "path": "frontend/src/components/AnalyzeButton.tsx",
+          "operation": "create",
+          "description": "Create an 'Analyze' button component that triggers analysis generation. On click, call the analysisGenerator utility with current asset and timeframe, display the resulting AnalysisCard, and invoke a callback to save the analysis to the backend. Apply electric blue styling consistent with the theme."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add AnalyzeButton component below the TradingViewChart. Manage state for the current analysis result. When analysis is generated, display the AnalysisCard and trigger backend save."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Add a 'History' tab listing all previous analyses from backend",
+      "acceptanceCriteria": [
+        "History tab is accessible from the main dashboard",
+        "All previous analyses for the logged-in user are listed, newest first",
+        "Each list item shows asset, timeframe, risk badge, and timestamp",
+        "Clicking a list item shows the full Analysis Card details",
+        "History is loaded from the Motoko backend on tab open"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useAnalysisHistory.ts",
+          "operation": "create",
+          "description": "Create a React Query hook that fetches analysis history from the backend using the getAnalysisHistory() method. Return an array of AnalysisRecord objects. Enable caching and automatic refetching. Handle loading and error states."
+        },
+        {
+          "path": "frontend/src/components/HistoryTab.tsx",
+          "operation": "create",
+          "description": "Create a History tab component that uses the useAnalysisHistory hook to fetch and display all previous analyses. Sort records newest first by timestamp. Render each record as a list item showing asset, timeframe, risk badge (color-coded), and formatted timestamp. On item click, expand or navigate to show the full AnalysisCard for that record. Apply dark fintech list styling."
+        },
+        {
+          "path": "frontend/src/hooks/useSaveAnalysis.ts",
+          "operation": "create",
+          "description": "Create a React Query mutation hook that saves an AnalysisRecord to the backend using the saveAnalysis() method. Invalidate the analysis history query cache on success to trigger refetch. Handle loading and error states."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add tab navigation allowing users to switch between the main Dashboard view and the History tab. Use React state or a simple tab component. When the Analyze button generates a new analysis, call the useSaveAnalysis mutation to persist it. Ensure the HistoryTab is rendered when the History tab is active."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Display a persistent footer with disclaimer text",
+      "acceptanceCriteria": [
+        "Footer is visible on all authenticated pages/tabs",
+        "Footer text reads exactly: 'This is not financial advice. No profits are guaranteed.'"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/Footer.tsx",
+          "operation": "create",
+          "description": "Create a footer component displaying the exact text: 'This is not financial advice. No profits are guaranteed.' Apply dark theme styling with light grey or white text on charcoal background. Ensure it remains at the bottom of the viewport."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add Footer component at the bottom of the authenticated dashboard layout. Ensure it persists across all views and tabs (Dashboard and History)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Apply consistent dark fintech visual theme across the entire application",
+      "acceptanceCriteria": [
+        "Application background is deep charcoal",
+        "Primary buttons and active states use electric blue",
+        "Risk badges use correct green/yellow/red colors",
+        "All text is legible against dark backgrounds",
+        "Theme is consistent across dashboard, history tab, login screen, and footer"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Update global styles to define the dark fintech theme: deep charcoal background (#1a1a2e or similar), electric blue primary color (#0066ff), light grey/white text, and risk badge colors (green=#22c55e, yellow=#eab308, red=#ef4444). Apply consistent spacing, border-radius, and subtle glow/shadow effects for interactive elements. Ensure all text is legible."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Extend the Tailwind theme with custom colors for the fintech palette: charcoal background, electric blue primary, risk badge colors (green, yellow, red), and light text. Add custom utility classes for glowing effects and shadows on interactive elements."
+        }
+      ]
+    }
+  ]
+}

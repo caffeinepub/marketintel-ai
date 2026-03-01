@@ -1,0 +1,200 @@
+{
+  "kind": "build_request",
+  "title": "MarketIntel AI — Crypto Market Analysis Dashboard",
+  "projectName": "MarketIntel AI",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Implement Internet Identity authentication. Gate the entire dashboard behind login. Show a centered login screen with the app logo and an 'Login with Internet Identity' button when the user is unauthenticated. Provide a 'Logout' button in the top bar that clears the session.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Use Internet Identity for login"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Unauthenticated users see only the login screen",
+        "Clicking 'Login with Internet Identity' triggers the II authentication flow",
+        "After successful login, the dashboard is displayed",
+        "Clicking 'Logout' clears the session and returns the user to the login screen"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Build a persistent top navigation bar showing the app name 'MarketIntel AI' on the left and a 'Logout' button on the right. The bar must be visible on all authenticated views.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Top Bar: App name and a Logout button"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Top bar is always visible when authenticated",
+        "App name 'MarketIntel AI' is displayed on the left",
+        "Logout button is on the right and triggers logout"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add an asset selection area below the top bar. Include a dropdown menu listing BTC, ETH, and SOL. Add three timeframe toggle buttons: 1H, 4H, 1D. Only one timeframe can be active at a time (highlighted state). The selected asset and timeframe are used by the chart and analysis features.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "A dropdown to select a crypto asset (BTC, ETH, SOL) and buttons for 1H, 4H, and 1D timeframes"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Dropdown lists BTC, ETH, SOL and defaults to BTC",
+        "1H, 4H, 1D buttons are displayed; active button is visually highlighted",
+        "Selecting a different asset or timeframe updates the chart view"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Embed a TradingView chart widget in the main view area. The widget must reflect the currently selected asset (BTC, ETH, SOL) and timeframe (1H, 4H, 1D). Use the TradingView Advanced Chart widget via an iframe or script embed (https://www.tradingview.com/widget/). If CSP restrictions prevent embedding, show a graceful fallback message indicating the chart could not be loaded with a link to TradingView.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Embed a live TradingView chart widget in the center"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Chart area updates when the user changes the asset or timeframe",
+        "TradingView widget is embedded via iframe/script in the center of the dashboard",
+        "If the embed fails, a graceful fallback message with a TradingView link is shown"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Add an 'Analyze' button below the chart. When clicked, generate a simulated AI Analysis Card for the currently selected asset and timeframe. The card must display: Trend (Bullish or Bearish), RSI Status (Overbought / Oversold / Neutral), Support/Resistance (two or three key price levels), Risk Badge (color-coded: Green = Low, Yellow = Medium, Red = High), and a Summary text paragraph explaining the market condition. Values should be algorithmically derived based on the selected asset and timeframe (deterministic seeded simulation is acceptable since no real AI API is available).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Add an 'Analyze' button. When clicked, display an Analysis Card with these data points"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Clicking 'Analyze' shows an Analysis Card with all five data points",
+        "Trend shows 'Bullish' or 'Bearish'",
+        "RSI Status shows 'Overbought', 'Oversold', or 'Neutral'",
+        "Support/Resistance lists at least two price levels",
+        "Risk Badge is color-coded green/yellow/red",
+        "Summary contains a short descriptive paragraph",
+        "Analysis Card values vary meaningfully by asset and timeframe selection"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "After an analysis is generated, save it to the Motoko backend associated with the authenticated user's principal. Each saved record must store: asset symbol, timeframe, trend, RSI status, support/resistance levels, risk level, summary text, and a timestamp.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Save all analysis history to the backend so it persists when the user returns"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Motoko actor exposes a function to save an analysis record keyed by user principal",
+        "Motoko actor exposes a function to retrieve all analysis records for the authenticated principal",
+        "All required fields (asset, timeframe, trend, RSI, support/resistance, risk, summary, timestamp) are persisted",
+        "Data survives canister upgrades using stable storage"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Add a 'History' tab (alongside or below the main dashboard view). This tab lists all previous analyses for the authenticated user, retrieved from the backend, ordered newest first. Each list item shows the asset, timeframe, risk badge color, and timestamp. Clicking a list item expands or navigates to a detail view showing the full Analysis Card for that record.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "History Tab: Create a section that saves and lists all previous analyses so the user can click and view them later"
+        ]
+      },
+      "acceptanceCriteria": [
+        "History tab is accessible from the main dashboard",
+        "All previous analyses for the logged-in user are listed, newest first",
+        "Each list item shows asset, timeframe, risk badge, and timestamp",
+        "Clicking a list item shows the full Analysis Card details",
+        "History is loaded from the Motoko backend on tab open"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Display a persistent footer at the bottom of every authenticated page with the exact text: 'This is not financial advice. No profits are guaranteed.'",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Footer: Always show 'This is not financial advice. No profits are guaranteed.'"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Footer is visible on all authenticated pages/tabs",
+        "Footer text reads exactly: 'This is not financial advice. No profits are guaranteed.'"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Apply a consistent dark fintech visual theme across the entire application: deep charcoal (#1a1a2e or similar) background, electric blue (#0066ff or similar) for primary buttons and active states, light grey or white for primary text, subtle card surfaces using slightly lighter charcoal. Use a clean monospaced or sans-serif typeface. Ensure the Analysis Card risk badges use green (#22c55e), yellow (#eab308), and red (#ef4444). Apply consistent spacing, border-radius, and subtle glow/shadow effects on interactive elements.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Dark-themed fintech style. Deep charcoal background with electric blue buttons"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Application background is deep charcoal",
+        "Primary buttons and active states use electric blue",
+        "Risk badges use correct green/yellow/red colors",
+        "All text is legible against dark backgrounds",
+        "Theme is consistent across dashboard, history tab, login screen, and footer"
+      ]
+    }
+  ],
+  "constraints": [
+    "All backend logic must reside in a single Motoko actor in backend/main.mo",
+    "Analysis history must be keyed by Internet Identity principal and persisted in stable storage",
+    "Do not integrate any real AI/LLM API — analysis values must be algorithmically simulated on the frontend",
+    "Do not use any external databases or cloud services",
+    "Immutable frontend paths (hooks, main.tsx, ui components) must not be modified"
+  ],
+  "nonGoals": [
+    "Real-time price data feeds or live candlestick data from external APIs",
+    "Actual AI/ML model inference for market analysis",
+    "Trading execution or portfolio management features",
+    "Mobile native application",
+    "Email or push notifications",
+    "Multi-user admin or social features"
+  ],
+  "imageRequirements": {
+    "required": [
+      "MarketIntel AI app logo — abstract electric blue circuit/chart line icon on a dark charcoal circular background, minimal and modern (marketintel-logo.dim_128x128.png)"
+    ],
+    "edits": []
+  }
+}

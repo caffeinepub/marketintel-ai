@@ -1,0 +1,64 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-03-01T12:00:10.154Z",
+  "summary": "The implementation covers all major requirements quite well. REQ-1 through REQ-9 are largely addressed: Internet Identity authentication, top bar, asset/timeframe selector, TradingView chart with fallback, simulated analysis card, Motoko backend with save/retrieve, history tab, footer, and dark theme. However, there is one notable concern: the Motoko backend uses non-stable in-memory storage (Map.empty rather than stable variables), which likely fails the 'data survives canister upgrades' AC. Additionally, minor concerns exist around the exact required image filename and stable storage.",
+  "missing_requirements": [
+    {
+      "id": "REQ-6",
+      "requirement": "Data survives canister upgrades using stable storage",
+      "reason": "The backend/main.mo uses 'let analyses = Map.empty<Principal, List.List<AnalysisRecord>>()' as a regular (non-stable) variable. There is no 'stable var' declaration, no pre/postupgrade system hooks, and no use of stable data structures for persistence across canister upgrades.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "A 'LIVE' badge indicator is shown in the TopBar next to the app name",
+      "reason": "The build request does not mention any live/online status indicator in the top bar. REQ-2 only specifies app name on left and logout button on right.",
+      "evidence": [
+        "frontend/src/components/TopBar.tsx"
+      ]
+    },
+    {
+      "description": "caffeine.ai attribution link is included in the Footer component",
+      "reason": "The build request specifies the footer must show only 'This is not financial advice. No profits are guaranteed.' with no mention of third-party attribution links.",
+      "evidence": [
+        "frontend/src/components/Footer.tsx"
+      ]
+    },
+    {
+      "description": "Access control and authorization mixin system with permission checks (MixinAuthorization, AccessControl) is integrated into the Motoko actor",
+      "reason": "The build request specifies a single Motoko actor with principal-keyed stable storage for analysis history. No access control layer or admin/user permission system was requested.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "confidence": 0.82,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/AnalysisCard.tsx",
+    "frontend/src/components/AssetSelector.tsx",
+    "frontend/src/components/Footer.tsx",
+    "frontend/src/components/HistoryTab.tsx",
+    "frontend/src/components/LoginScreen.tsx",
+    "frontend/src/components/TopBar.tsx",
+    "frontend/src/components/TradingViewChart.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/utils/analysisGenerator.ts",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

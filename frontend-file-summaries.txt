@@ -1,0 +1,14 @@
+{
+  "frontend/src/index.css": "Global styles defining the dark fintech theme with OKLCH color tokens, custom utility classes for glow effects, scrollbar styling, and Google Fonts imports for Inter and Space Grotesk.",
+  "frontend/tailwind.config.js": "Tailwind configuration extending the theme with custom fintech color tokens (electric blue, charcoal, risk colors), Space Grotesk/Inter font families, glow box shadows, and fade-in/pulse animations.",
+  "frontend/src/utils/analysisGenerator.ts": "Deterministic seeded analysis generator that produces trend, RSI status, support/resistance levels, risk level, and summary text based on asset symbol and timeframe using a mulberry32 PRNG.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for fetching analysis history (`useGetAnalysisHistory`) and saving new analyses (`useSaveAnalysis`) with cache invalidation on success.",
+  "frontend/src/components/LoginScreen.tsx": "Centered dark-themed login screen with app logo, feature highlights grid, and Internet Identity authentication button with loading/error states.",
+  "frontend/src/components/TopBar.tsx": "Sticky top navigation bar showing the MarketIntel AI logo/name with a live indicator on the left and a logout button with truncated principal on the right.",
+  "frontend/src/components/AssetSelector.tsx": "Selection bar with a shadcn Select dropdown for BTC/ETH/SOL and three timeframe toggle buttons (1H/4H/1D) with electric blue active state highlighting.",
+  "frontend/src/components/TradingViewChart.tsx": "TradingView Advanced Chart widget embedded via dynamic script injection with asset/timeframe prop mapping and a graceful fallback UI if the script fails to load.",
+  "frontend/src/components/AnalysisCard.tsx": "Detailed analysis card displaying trend, RSI status, support/resistance price levels, color-coded risk badge, and AI summary text with a compact mode for history list items.",
+  "frontend/src/components/HistoryTab.tsx": "History tab that fetches and lists all previous analyses from the backend, sorted newest first, with expandable rows showing full AnalysisCard details and a refresh button.",
+  "frontend/src/components/Footer.tsx": "Persistent footer with the financial disclaimer text, a warning icon, and caffeine.ai attribution with UTM tracking and dynamic year.",
+  "frontend/src/App.tsx": "Main application component handling auth gating (login screen vs dashboard), tab navigation between Dashboard and History views, asset/timeframe state, analysis generation, and backend save integration."
+}
